@@ -1,1 +1,5 @@
 # AzureNetworking
+
+```powershell
+Get-AzSubscription
+```
