@@ -1,5 +1,5 @@
 # AzureNetworking
 
 ```powershell
-Get-AzSubscription
+Get-AzSubscription -SubscriptionId bosse
 ```
