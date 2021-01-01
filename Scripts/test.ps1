@@ -1,7 +1,7 @@
 param( 
     [string]$vaultname
 )
-Install-Module -Name PKI -AllowClobber -Force
+Import-Module -Name .\PKI
 #Root certificate properties
 $root = @{
     Type              = "Custom" 
