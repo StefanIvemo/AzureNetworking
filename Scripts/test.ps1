@@ -1,7 +1,7 @@
 param( 
     [string]$vaultname
 )
-Import-Module -Name .\PKI
+Import-Module -Name .\PKI.psd1
 #Root certificate properties
 $root = @{
     Type              = "Custom" 
