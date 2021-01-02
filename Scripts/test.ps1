@@ -1,7 +1,6 @@
 param( 
     [string]$vaultname
 )
-Install-Module WindowsCompatibility -Scope CurrentUser  -AllowClobber -Force -Verbose
 Import-WinModule -Name PKI -Verbose -Force
 #Root certificate properties
 $root = @{
