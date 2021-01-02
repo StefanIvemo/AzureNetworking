@@ -2,11 +2,11 @@ param(
     [string]$vaultname
 )
 $Env:PSModulePath
-New-Item WindowsCompatibility -itemtype directory
-Copy-Item "./WindowsCompatibility.psd1" -Destination "./WindowsCompatibility"
-Copy-Item "./WindowsCompatibility.psm1" -Destination "./WindowsCompatibility"
+New-Item /usr/local/share/powershell/Modules/WindowsCompatibility -itemtype directory
+Copy-Item "./WindowsCompatibility.psd1" -Destination "/usr/local/share/powershell/Modules/WindowsCompatibility"
+Copy-Item "./WindowsCompatibility.psm1" -Destination "/usr/local/share/powershell/Modules/WindowsCompatibility"
 
-Import-Module ./WindowsCompatibility -Force -Verbose
+Import-Module WindowsCompatibility -Force -Verbose
 
 Import-WinModule -Name PKI -Verbose -Force
 #Root certificate properties
