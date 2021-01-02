@@ -1,7 +1,8 @@
 param( 
     [string]$vaultname
 )
-Import-Module -Name ./pki.psd1
+Install-Module WindowsCompatibility -AllowClobber -Force
+Import-WinModule -Name PKI
 #Root certificate properties
 $root = @{
     Type              = "Custom" 
