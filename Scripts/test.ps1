@@ -1,7 +1,12 @@
 param( 
     [string]$vaultname
 )
-Import-Module -Name ./WindowsCompatibility -Force
+New-Item WindowsCompatibility -itemtype directory
+Copy-Item "./WindowsCompatibility.psd1" -Destination "./WindowsCompatibility"
+Copy-Item "./WindowsCompatibility.psm1" -Destination "./WindowsCompatibility"
+
+Import-Module ./WindowsCompatibility -Scope CurrentUser -Force -Verbose
+
 Import-WinModule -Name PKI -Verbose -Force
 #Root certificate properties
 $root = @{
