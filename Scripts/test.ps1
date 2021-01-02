@@ -2,6 +2,7 @@ param(
     [string]$vaultname
 )
 $Env:PSModulePath
+Get-ChildItem -Path ./
 New-Item WindowsCompatibility -itemtype directory
 Copy-Item "./WindowsCompatibility.psd1" -Destination "./WindowsCompatibility"
 Copy-Item "./WindowsCompatibility.psm1" -Destination "./WindowsCompatibility"
