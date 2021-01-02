@@ -12,6 +12,8 @@ openssl x509 -req -in interCA.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateseri
 # Export the intermediate CA into PFX
 openssl pkcs12 -export -out interCA.pfx -inkey interCA.key -in interCA.crt -password "pass:"
 
+az keyvault certificate import --vault-name fw-premium-ywak5pls23pmi -n interCA -f cert_file interCA.pfx
+
 # Convert the PFX into base64
 if [ "$(uname)" == "Darwin" ]; then
     cat interCA.pfx | base64 > interCA.pfx.base64
