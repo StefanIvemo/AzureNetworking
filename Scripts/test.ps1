@@ -1,7 +1,7 @@
 param( 
     [string]$vaultname
 )
-Import-Module -Name ./WindowsCompatibility.psd1 -AllowClobber -Force
+Import-Module -Name ./WindowsCompatibility.psd1 -Force
 Import-WinModule -Name PKI -Verbose -Force
 #Root certificate properties
 $root = @{
