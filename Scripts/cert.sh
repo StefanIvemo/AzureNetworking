@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#/bin/bash
 # Create root CA
 openssl req -x509 -new -nodes -newkey rsa:4096 -keyout rootCA.key -sha256 -days 1024 -out rootCA.crt -subj "/C=US/ST=US/O=Self Signed/CN=Self Signed Root CA" -config openssl.cnf -extensions rootCA_ext
 
@@ -12,19 +11,11 @@ openssl x509 -req -in interCA.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateseri
 # Export the intermediate CA into PFX
 openssl pkcs12 -export -out interCA.pfx -inkey interCA.key -in interCA.crt -password "pass:"
 
-az keyvault certificate import --vault-name fw-premium-ywak5pls23pmi -n interCA -f cert_file interCA.pfx
+openssl pkcs12 -export -out rootCA.pfx -inkey rootCA.key -in rootCA.crt -password "pass:"
 
-# Convert the PFX into base64
-if [ "$(uname)" == "Darwin" ]; then
-    cat interCA.pfx | base64 > interCA.pfx.base64
-else
-    cat interCA.pfx | base64 -w 0 > interCA.pfx.base64
-fi
+interCA=$(az keyvault certificate import --vault-name $1 -n interCA -f interCA.pfx)
+rootCA=$(az keyvault certificate import --vault-name $1 -n rootCA -f rootCA.pfx)
 
-echo ""
-echo "================"
-echo "Successfully generated root and intermediate CA certificates"
-echo "   - rootCA.crt/rootCA.key - Root CA public certificate and private key"
-echo "   - interCA.crt/interCA.key - Intermediate CA public certificate and private key"
-echo "   - interCA.pfx.base64 - Intermediate CA pkcs12 package to be consumed by CACertificate template"
-echo "================"
+json="{\"certs\":{\"interCA\":\"$inteCA\",\"rootCA\":\"$rootCA\"}}"
+
+echo "$json" > $AZ_SCRIPTS_OUTPUT_PATH
