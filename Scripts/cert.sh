@@ -16,6 +16,6 @@ openssl pkcs12 -export -out rootCA.pfx -inkey rootCA.key -in rootCA.crt -passwor
 interCA=$(az keyvault certificate import --vault-name $1 -n interCA -f interCA.pfx)
 rootCA=$(az keyvault certificate import --vault-name $1 -n rootCA -f rootCA.pfx)
 
-json="{\"certs\":{\"interCA\":\"$inteCA\",\"rootCA\":\"$rootCA\"}}"
+json="{\"certs\":{\"interCA\":\"$interCA\",\"rootCA\":\"$rootCA\"}}"
 
 echo "$json" > $AZ_SCRIPTS_OUTPUT_PATH
