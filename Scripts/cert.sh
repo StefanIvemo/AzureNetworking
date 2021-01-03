@@ -1,4 +1,7 @@
 #/bin/bash
+keyvault=$1
+echo $keyvault
+
 # Create root CA
 openssl req -x509 -new -nodes -newkey rsa:4096 -keyout rootCA.key -sha256 -days 1024 -out rootCA.crt -subj "/C=US/ST=US/O=Self Signed/CN=Self Signed Root CA" -config openssl.cnf -extensions rootCA_ext
 
@@ -13,9 +16,5 @@ openssl pkcs12 -export -out interCA.pfx -inkey interCA.key -in interCA.crt -pass
 
 openssl pkcs12 -export -out rootCA.pfx -inkey rootCA.key -in rootCA.crt -password "pass:"
 
-interCA=$(az keyvault certificate import --vault-name $1 -n interCA -f interCA.pfx)
-rootCA=$(az keyvault certificate import --vault-name $1 -n rootCA -f rootCA.pfx)
-
-json="{\"certs\":{\"interCA\":\"$interCA\",\"rootCA\":\"$rootCA\"}}"
-
-echo "$json" > $AZ_SCRIPTS_OUTPUT_PATH
+az keyvault certificate import --vault-name $keyvault -n interCA -f interCA.pfx
+az keyvault certificate import --vault-name $keyvault -n rootCA -f rootCA.pfx
