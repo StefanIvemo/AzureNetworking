@@ -3,7 +3,7 @@ $AppServices = @(
 az webapp list | ConvertFrom-Json
 az functionapp list | ConvertFrom-Json
 )
-$VNetAppServices = foreach ($App in $AppServices) {    
+$VNetAppServices = foreach ($App in $AppServices[0]) {    
     $Apps = az webapp vnet-integration list --n $App.Name -g $App.ResourceGroup
     if ($Apps -ne "[]") {
         $ServerFarm = $App.appServicePlanId -split '/'
